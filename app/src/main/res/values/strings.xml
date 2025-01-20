@@ -32,4 +32,8 @@
     <string name="meong_scan">Meong Scan</string>
     <string name="kembali">Kembali</string>
     <string name="panduan_penggunaan_aplikasi">Panduan Penggunaan Aplikasi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ras_kucing_s">Ras kucing: %s</string>
+    <string name="akurasi_s">Akurasi : %s</string>
 </resources>

@@ -20,7 +20,6 @@ class PerawatanFragment : Fragment() {
         // Ambil data perawatan
         val careDetails = arguments?.getParcelable<CareDetails>("CARE_DETAILS")
         careDetails?.let {
-            binding.tvDeskripsi.text = it.deskripsi
 
             // Perawatan Bulu dengan penomoran
             binding.tvPerawatanBulu.text = formatListWithNumbers(it.perawatanBulu)

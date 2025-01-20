@@ -1,8 +1,8 @@
 package com.example.myapplication.response
 
+import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ApiResponse(
@@ -13,22 +13,22 @@ data class ApiResponse(
 	@field:SerializedName("confidence")
 	val confidence: String? = null,
 
+	@field:SerializedName("deskripsi")
+	val deskripsi: String? = null,
+
 	@field:SerializedName("class")
 	val jsonMemberClass: String? = null,
 
 	@field:SerializedName("makanan")
 	val makanan: Makanan? = null
-):Parcelable
+) : Parcelable
 
 @Parcelize
 data class Makanan(
 
 	@field:SerializedName("nutrisi")
-	val nutrisi: String? = null,
-
-	@field:SerializedName("image_links")
-	val imageLinks: String? = null
-):Parcelable
+	val nutrisi: String? = null
+) : Parcelable
 
 @Parcelize
 data class CareDetails(
@@ -43,8 +43,5 @@ data class CareDetails(
 	val aktivitas: List<String?>? = null,
 
 	@field:SerializedName("Perawatan Bulu")
-	val perawatanBulu: List<String?>? = null,
-
-	@field:SerializedName("deskripsi")
-	val deskripsi: String? = null
-):Parcelable
+	val perawatanBulu: List<String?>? = null
+) : Parcelable

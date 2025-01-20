@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
     <!-- Bagian Kiri: Gambar -->
@@ -14,11 +15,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/image_product"
+        <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
-            android:layout_height="155dp"
-            android:scaleType="fitCenter" />
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/kucing"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
     </LinearLayout>
 
     <ScrollView

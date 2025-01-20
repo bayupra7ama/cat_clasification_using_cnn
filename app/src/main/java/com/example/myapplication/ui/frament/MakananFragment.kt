@@ -30,12 +30,7 @@ class MakananFragment : Fragment() {
 
         foodDetails?.let {
             binding.nutritionDescription.text = it.nutrisi
-            Log.d("foto", "gambar link : ${it.imageLinks}")
-            if (!it.imageLinks.isNullOrEmpty()) {
-                Glide.with(this)
-                    .load(it.imageLinks)
-                    .into(binding.imageProduct)
-            }
+
         }
     }
 
@@ -47,12 +42,6 @@ class MakananFragment : Fragment() {
 
         foodDetails?.let {
             binding.nutritionDescription.text = it.nutrisi
-            Log.d("foto", "gambar link : ${it.imageLinks}")
-            if (!it.imageLinks.isNullOrEmpty()) {
-                Glide.with(this)
-                    .load(it.imageLinks)
-                    .into(binding.imageProduct)
-            }
         }
 
 

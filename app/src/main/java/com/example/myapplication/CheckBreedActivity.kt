@@ -54,6 +54,8 @@ class CheckBreedActivity : AppCompatActivity() {
                 Toast.makeText(this, "Pilih atau ambil gambar terlebih dahulu!", Toast.LENGTH_SHORT).show()
             }
         }
+
+
     }
 
     @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
@@ -93,16 +95,27 @@ class CheckBreedActivity : AppCompatActivity() {
 
         call.enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
-                toggleUI(true) // Aktifkan kembali tombol dan sembunyikan ProgressBar
+                toggleUI(true) // Aktifkan kembali tombol dan sembunyikan animasi Lottie
                 if (response.isSuccessful) {
                     val apiResponse = response.body()
                     if (apiResponse != null) {
-                        val intent = Intent(this@CheckBreedActivity, DetailViewPagerActivity::class.java).apply {
-                            putExtra("CAT_IMAGE_URI", file.absolutePath)
-                            putExtra("CARE_DETAILS", apiResponse.careDetails)
-                            putExtra("FOOD_DETAILS", apiResponse.makanan)
+                        // Cek jika makanan adalah null
+                        if (apiResponse.makanan == null) {
+                            Toast.makeText(
+                                this@CheckBreedActivity,
+                                "Gagal predik, cek gambar!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            // Jika respons valid, lanjutkan ke DetailViewPagerActivity
+                            val intent = Intent(this@CheckBreedActivity, DetailViewPagerActivity::class.java).apply {
+                                putExtra("CAT_IMAGE_URI", file.absolutePath)
+                                putExtra("CARE_DETAILS", apiResponse.careDetails)
+                                putExtra("FOOD_DETAILS", apiResponse.makanan)
+                                putExtra("RESPONSE", apiResponse)
+                            }
+                            startActivity(intent)
                         }
-                        startActivity(intent)
                     } else {
                         Toast.makeText(this@CheckBreedActivity, "Respons kosong dari server!", Toast.LENGTH_SHORT).show()
                     }
@@ -116,7 +129,7 @@ class CheckBreedActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                toggleUI(true) // Aktifkan kembali tombol dan sembunyikan ProgressBar
+                toggleUI(true) // Aktifkan kembali tombol dan sembunyikan animasi Lottie
                 Toast.makeText(
                     this@CheckBreedActivity,
                     "Gagal mengunggah gambar: ${t.localizedMessage}",
@@ -125,12 +138,21 @@ class CheckBreedActivity : AppCompatActivity() {
                 Log.e("UploadImageError", "Error saat mengunggah gambar", t)
             }
         })
+
     }
 
     private fun toggleUI(enable: Boolean) {
-        binding.progressBar.visibility = if (enable) View.GONE else View.VISIBLE
+        if (enable) {
+            binding.lottieLoading.visibility = View.GONE
+            binding.lottieLoading.cancelAnimation()
+        } else {
+            binding.lottieLoading.visibility = View.VISIBLE
+            binding.lottieLoading.playAnimation()
+        }
+
         binding.btnChooseImage.isEnabled = enable
         binding.btnTakePhoto.isEnabled = enable
         binding.btnPostPhoto.isEnabled = enable
     }
+
 }
